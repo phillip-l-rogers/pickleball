@@ -111,5 +111,5 @@ real-world problems.
 
 ## 📬 Contact
 
-- 📧 Email: [phillip.l.rogers.29@gmail.com](mailto://phillip.l.rogers.29@gmail.com)
+- 📧 Email: phillip.l.rogers.29@gmail.com
 - 💼 LinkedIn: https://linkedin.com/in/phillip-rogers-b76329365
