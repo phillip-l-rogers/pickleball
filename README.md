@@ -1,22 +1,22 @@
 # 🎾 Pickleball Tournament Manager
 
-**Built for [CS50’s Web Programming with Python and JavaScript (CS50W)](https://cs50.harvard.edu/web/).**  
-A full-stack web app for creating and managing round-robin pickleball tournaments. 
-Features include player registration, automatic match scheduling, score submissions, 
-and dynamic standings.
+A full-stack web application for organizing and managing round-robin pickleball
+tournaments. Players can register, matches are auto-scheduled, and scores are submitted
+directly to update standings in real-time. Built to solve a real-world workflow with a
+modern React + Django stack.
 
 ---
 
 ## 🚀 Features
 
-- Create round-robin tournaments with customizable settings
-- Player self-registration or admin invitations
-- Automatically generate match schedules based on number of players
-- Record and update match scores
-- Live leaderboard and standings based on wins/losses
-- Admin dashboard to manage tournaments and participants
-- RESTful API backend built with Django REST Framework
-- React-based frontend with responsive UI
+- Create and configure tournaments with flexible settings
+- Player self-registration or admin assignment
+- Auto-generate round-robin match schedules
+- Score submission by players or organizers
+- Live leaderboard updates and standings
+- Authentication and permission controls
+- Clean, responsive UI built with Tailwind and React
+- RESTful API powered by Django REST Framework
 
 ---
 
@@ -33,116 +33,83 @@ and dynamic standings.
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** React, Tailwind CSS
+- **Frontend:** React, Tailwind CSS, Vite
 - **Backend:** Django, Django REST Framework
 - **Database:** SQLite (dev), PostgreSQL (prod)
-- **API:** RESTful architecture
-- **Auth:** Django authentication, token/session-based
+- **Auth:** Django sessions, custom permissions
+- **Deployment:** Render
 
 ---
 
 ## ▶️ Live Demo
 
 - 🌐 Live site: *(coming soon)*
-- 📺 Video demo: *(coming soon)*
+- 💻 GitHub repo: [github.com/phillip-l-rogers/pickleball](https://github.com/phillip-l-rogers/pickleball)
 
 ---
 
-## 🧪 Testing Tips
-
-- Register as a new user and create a tournament
-- Add yourself and others as players
-- Start the tournament to generate the match schedule
-- Submit scores to update standings
-- Try accessing the admin view for full control
-
----
-
-## 📦 Setup Instructions
+## 📦 Getting Started
 
 ### Backend (Django)
 
-1. **Clone the repository and navigate to the backend:**
+```bash
+# Clone and set up virtual environment
+git clone https://github.com/phillip-l-rogers/pickleball.git
+cd pickleball-backend
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
 
-   ```bash
-   git clone https://github.com/phillip-l-rogers/pickleball.git
-   cd pickleball-backend
-   ```
-
-2. **Create a virtual environment and activate it:**
-
-    ```bash
-    python -m venv venv
-    source venv/bin/activate    # On Windows: venv\Scripts\activate
-    ```
-
-3. **Install dependencies:**
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4. **Apply migrations:**
-
-    ```bash
-    python manage.py migrate
-    ```
-
-5. **Run the development server:**
-
-    ```bash
-    python manage.py runserver
-    ```
+# Install and run
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
+```
 
 ### Frontend (React)
 
-1. **Open a new terminal and navigate to the frontend:**
+```bash
+cd ../pickleball-frontend
+npm install
+npm run dev
+```
 
-    ```bash
-    cd ../pickleball-frontend
-    ```
+Visit http://localhost:5173/ to run locally.
 
-2. **Install dependencies:**
+---
 
-    ```bash
-    npm install
-    ```
+## 🧪 Tips for Testing
 
-3. **Run the development server:**
+- Log in or register to create tournaments
+- Add players and simulate match results
+- Use multiple users to test score entry
+- Try running a full tournament start-to-finish
 
-    ```bash
-    npm run dev
-    ```
+---
 
-4. **Visit:**
-
-    http://localhost:5173/
-
-
---- 
-
-## 📁 Project Structure
+## 📁 Folder Structure
 
 ```bash
 pickleball/
 ├── pickleball-backend/     # Django + DRF
 │   ├── manage.py
-│   ├── api/                # Core tournament logic
+│   ├── api/                # Tournament logic
 │   └── requirements.txt
-├── pickleball-frontend/    # React + Tailwind
+├── pickleball-frontend/    # React app
 │   ├── src/
 │   └── package.json
 ```
 
---- 
+---
 
-## 📚 Acknowledgments
-
-- This project was built as the final capstone for CS50W
-- Inspired by local round-robin pickleball tournaments and league tools
+## ✨ Motivation
+This project was built to bring structure and automation to informal pickleball 
+tournaments. It reflects my strengths in backend architecture, API design, and building
+user-focused tools — and it’s a great example of applying full-stack skills to solve
+real-world problems.
 
 ---
 
-## 📜 License
+## 📬 Contact
 
-- Educational use only. Built as part of Harvard CS50W.
+- 📧 Email: [phillip.l.rogers.29@gmail.com](mailto://phillip.l.rogers.29@gmail.com)
+- 💼 LinkedIn: https://linkedin.com/in/phillip-rogers-b76329365
