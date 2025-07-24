@@ -1,0 +1,9 @@
+{
+  "pylint.args": [
+    "--load-plugins=pylint_django", 
+    "--django-settings-module=config.settings",
+    "--disable=W0621"
+  ],
+  "python.analysis.extraPaths": ["./pickleball-backend"],
+  "python.envFile": "${workspaceFolder}/.env",
+}
