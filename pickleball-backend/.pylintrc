@@ -1,5 +1,7 @@
 [MASTER]
 ignore=migrations
+
+[PYLINT]
 load-plugins=pylint_django
 
 [MESSAGES CONTROL]
@@ -7,3 +9,6 @@ disable=missing-docstring,invalid-name
 
 [DJANGO]
 settings-module=config.settings
+
+[TYPECHECK]
+generated-members=objects,DoesNotExist
