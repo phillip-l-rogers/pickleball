@@ -32,8 +32,19 @@ jobs:
         run: |
           pip install pylint-badge
           source venv/bin/activate
-          pylint pickleball_backend/ --load-plugins pylint_django --exit-zero > pylint.log
-          pylint-badge -i pylint.log -o pylint.svg
+          pylint pickleball_backend/ --load-plugins pylint_django --exit-zero --output-format=json:pylint-report.json
+
+      - name: Convert JSON to badge
+        uses: Taction/pylint-github-action@main
+        with:
+          json-file: pylint-report.json
+          badge-output: pylint-badge.json
+
+      - name: Upload badge to repo
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: 'chore: update pylint badge'
+          add: 'pylint-badge.json'
 
       - uses: actions/upload-artifact@v4
         with:
