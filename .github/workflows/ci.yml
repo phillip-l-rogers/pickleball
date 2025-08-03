@@ -42,10 +42,9 @@ jobs:
           coverage xml
 
       - name: Upload coverage to Codecov
-        working-directory: pickleball-backend      
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage.xml
+          files: ./pickleball-backend/coverage.xml
           flags: unittests
           name: codecov-pickleball
