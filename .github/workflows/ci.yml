@@ -35,6 +35,11 @@ jobs:
           pylint pickleball_backend/ --load-plugins pylint_django --exit-zero > pylint.log
           pylint-badge -i pylint.log -o pylint.svg
 
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pylint-badge
+          path: pylint.svg
+
       - name: Run tests with coverage
         working-directory: pickleball-backend
         run: |

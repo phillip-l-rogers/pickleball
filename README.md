@@ -10,6 +10,7 @@ modern React + Django stack.
 ## 📊 Status
 
 [![codecov](https://codecov.io/github/phillip-l-rogers/pickleball/graph/badge.svg?token=W7RNQ8UJZ6)](https://codecov.io/github/phillip-l-rogers/pickleball)
+![Pylint Badge](badges/pylint.svg)
 
 ---
 
