@@ -7,11 +7,12 @@ on:
     branches: [main]
 
 jobs:
-  lint-and-test:
+  backend-ci:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -19,6 +20,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
+        working-directory: pickleball-backend
         run: |
           python -m venv venv
           source venv/bin/activate
@@ -26,11 +28,13 @@ jobs:
           pip install pylint coverage
 
       - name: Run Pylint
+        working-directory: pickleball-backend
         run: |
           source venv/bin/activate
           pylint tournaments > pylint-report.txt || true
 
-      - name: Run Tests with Coverage
+      - name: Run tests with coverage
+        working-directory: pickleball-backend
         run: |
           source venv/bin/activate
           coverage run manage.py test
@@ -41,4 +45,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: coverage.xml
+          path: pickleball-backend/coverage.xml
