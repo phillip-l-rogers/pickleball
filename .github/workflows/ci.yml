@@ -27,11 +27,13 @@ jobs:
           pip install -r requirements.txt
           pip install pylint coverage
 
-      - name: Run Pylint
+      - name: Run Pylint and Generate Badge
         working-directory: pickleball-backend
         run: |
+          pip install pylint-badge
           source venv/bin/activate
-          pylint tournaments --load-plugins pylint_django > pylint-report.txt || true
+          pylint pickleball_backend/ --load-plugins pylint_django --exit-zero > pylint.log
+          pylint-badge -i pylint.log -o pylint.svg
 
       - name: Run tests with coverage
         working-directory: pickleball-backend
