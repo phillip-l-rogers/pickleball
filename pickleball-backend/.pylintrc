@@ -1,7 +1,5 @@
-[MASTER]
-ignore=tournaments.migrations
-
 [PYLINT]
+ignore=tournaments.migrations
 load-plugins=pylint_django
 
 [MESSAGES CONTROL]
