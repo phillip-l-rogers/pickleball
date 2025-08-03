@@ -1,0 +1,44 @@
+name: Lint and Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+          pip install pylint coverage
+
+      - name: Run Pylint
+        run: |
+          source venv/bin/activate
+          pylint tournaments > pylint-report.txt || true
+
+      - name: Run Tests with Coverage
+        run: |
+          source venv/bin/activate
+          coverage run manage.py test
+          coverage report
+          coverage xml
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage.xml
