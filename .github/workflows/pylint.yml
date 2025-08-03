@@ -1,0 +1,32 @@
+name: Pylint Badge
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  pylint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Pylint and update badge
+        uses: Silleellie/pylint-github-action@v2.1
+        with:
+          lint-path: pickleball-backend/tournaments
+          python-version: 3.11
+          requirements-path: pickleball-backend/requirements.txt
+          readme-path: README.md
+          badge-text: PyLint
+          color-bad-score: red
+          color-ok-score: orange
+          color-good-score: yellow
+          color-perfect-score: brightgreen
