@@ -7,14 +7,10 @@ function TournamentList() {
 
   useEffect(() => {
     axios.get("/api/tournaments/")
-      .then((res) => {
-        console.log("API response:", res.data);
-        setTournaments(res.data);
-      })
-      .catch((err) => {
-        console.error("Failed to fetch tournaments:", err);
-      });
+      .then(res => setTournaments(res.data))
+      .catch(err => console.error(err));
   }, []);
+
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
