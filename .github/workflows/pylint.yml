@@ -9,6 +9,9 @@ on:
 jobs:
   pylint:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: pickleball-backend
 
     steps:
       - uses: actions/checkout@v4
@@ -21,10 +24,11 @@ jobs:
       - name: Run Pylint and update badge
         uses: Silleellie/pylint-github-action@v2.1
         with:
-          lint-path: pickleball-backend
-          requirements-path: pickleball-backend/requirements.txt
-          readme-path: README.md
-          badge-text: PyLint
+          lint-path: .
+          python-version: 3.11
+          requirements-path: requirements.txt
+          readme-path: ../README.md
+          badge-text: pylint
           color-bad-score: red
           color-ok-score: orange
           color-good-score: yellow
