@@ -6,8 +6,11 @@ function TournamentList() {
   const [tournaments, setTournaments] = useState([]);
 
   useEffect(() => {
-    axios.get("/api/tournaments/").then((res) => setTournaments(res.data));
+    axios.get("/api/tournaments/")
+      .then(res => setTournaments(res.data))
+      .catch(err => console.error(err));
   }, []);
+
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
@@ -22,7 +25,7 @@ function TournamentList() {
       </div>
 
       {tournaments.length === 0 ? (
-        <p className="text-gray-600">No tournaments yet.</p>
+        <p className="text-gray-600">No tournaments yet. Check back soon!</p>
       ) : (
         <ul className="space-y-4">
           {tournaments.map((t) => (
@@ -33,7 +36,9 @@ function TournamentList() {
               <div>
                 <h3 className="text-xl font-semibold">{t.name}</h3>
                 <p className="text-sm text-gray-600">
-                  {t.start_date} → {t.end_date} · Every {t.play_day}
+                  {t.is_league 
+                    ? `League • ${t.start_date} → ${t.end_date} · Every ${t.play_day}` 
+                    : `One-day • ${t.start_date}`}
                 </p>
               </div>
               <Link
