@@ -9,9 +9,6 @@ on:
 jobs:
   pylint:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: pickleball-backend
 
     steps:
       - uses: actions/checkout@v4
@@ -26,6 +23,7 @@ jobs:
         with:
           lint-path: pickleball-backend/tournaments
           python-version: 3.11
+          pylintrc-path: pickleball-backend/.pylintrc
           requirements-path: pickleball-backend/requirements.txt
           readme-path: README.md
           badge-text: pylint
