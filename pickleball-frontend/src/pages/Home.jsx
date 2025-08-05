@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { API_BASE } from './config';
+import { API_BASE } from '../config';
 
 function Home() {
   const [tournaments, setTournaments] = useState([]);

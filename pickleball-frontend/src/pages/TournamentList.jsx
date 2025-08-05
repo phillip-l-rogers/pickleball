@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { API_BASE } from './config';
+import { API_BASE } from '../config';
 
 function TournamentList() {
   const [tournaments, setTournaments] = useState([]);

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { API_BASE } from './config';
+import { API_BASE } from '../config';
 
 function TournamentDetail() {
   const { id } = useParams(); // ID from route
