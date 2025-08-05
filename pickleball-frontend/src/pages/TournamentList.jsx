@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { API_BASE } from './config';
 
 function TournamentList() {
   const [tournaments, setTournaments] = useState([]);
 
   useEffect(() => {
-    axios.get("/api/tournaments/")
+    axios.get(`${API_BASE}/tournaments/`)
       .then(res => setTournaments(res.data))
       .catch(err => console.error(err));
   }, []);

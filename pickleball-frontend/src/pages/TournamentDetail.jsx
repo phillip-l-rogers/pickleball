@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { API_BASE } from './config';
 
 function TournamentDetail() {
   const { id } = useParams(); // ID from route
@@ -8,10 +9,11 @@ function TournamentDetail() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`/api/tournaments/${id}/`).then((res) => {
-      setTournament(res.data);
-      setLoading(false);
-    });
+    axios.get(`${API_BASE}/tournaments/`)
+      .then((res) => {
+        setTournament(res.data);
+        setLoading(false);
+      });
   }, [id]);
 
   if (loading) return <div className="p-6">Loading tournament...</div>;
