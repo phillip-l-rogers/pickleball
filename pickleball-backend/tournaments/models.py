@@ -5,6 +5,7 @@ Supports both single-day and multi-week (league-style) tournaments.
 Includes user-to-tournament associations for signups and organizer roles.
 """
 
+from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -36,16 +37,19 @@ class Tournament(models.Model):
     is_league = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(
-        "CustomUser", on_delete=models.CASCADE, related_name="created_tournaments"
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="created_tournaments",
     )
     organizers = models.ManyToManyField(
-        "CustomUser", related_name="organized_tournaments", blank=True
+        settings.AUTH_USER_MODEL, related_name="organized_tournaments", blank=True
     )
 
     @property
     def duration_weeks(self) -> int:
         """
         Calculates the number of weeks the tournament spans.
+
         Returns 1 for single-day events.
         """
         if self.is_multi_week:
@@ -54,9 +58,7 @@ class Tournament(models.Model):
 
     @property
     def is_multi_week(self) -> bool:
-        """
-        Determines whether the tournament is a multi-week league.
-        """
+        """Determines whether the tournament is a multi-week league."""
         return bool(
             self.is_league
             and self.game_day
@@ -69,9 +71,7 @@ class Tournament(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        """
-        Automatically adds the creator as an organizer when the tournament is first saved.
-        """
+        """Adds the creator as an organizer when the tournament is first saved."""
         is_new = self.pk is None
         super().save(*args, **kwargs)
         if is_new:
@@ -85,7 +85,7 @@ class PlayerSignup(models.Model):
     Each user can sign up once per tournament.
     """
 
-    user = models.ForeignKey("CustomUser", on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     tournament = models.ForeignKey(
         Tournament, on_delete=models.CASCADE, related_name="signups"
     )
