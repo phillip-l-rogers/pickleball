@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { API_BASE } from '../config';
 
 function TournamentList() {
   const [tournaments, setTournaments] = useState([]);
 
   useEffect(() => {
-    axios.get("/api/tournaments/")
+    axios.get(`${API_BASE}/tournaments/`)
       .then(res => setTournaments(res.data))
       .catch(err => console.error(err));
   }, []);
@@ -37,8 +38,8 @@ function TournamentList() {
                 <h3 className="text-xl font-semibold">{t.name}</h3>
                 <p className="text-sm text-gray-600">
                   {t.is_league 
-                    ? `League • ${t.start_date} → ${t.end_date} · Every ${t.play_day}` 
-                    : `One-day • ${t.start_date}`}
+                    ? `League • ${t.start_date} → ${t.end_date} · Every ${t.game_day}` 
+                    : `Tournament • ${t.start_date}`}
                 </p>
               </div>
               <Link
