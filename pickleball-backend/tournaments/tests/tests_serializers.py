@@ -15,53 +15,6 @@ from tournaments.serializers import PlayerSignupSerializer, TournamentSerializer
 User = get_user_model()
 
 
-class TournamentSerializerTests(TestCase):
-    """Tests for validating the TournamentSerializer logic and league constraints."""
-
-    def setUp(self):
-        self.today = timezone.now().date()
-
-    def test_valid_single_day_tournament(self):
-        """Should accept a single-day tournament with only start_date."""
-        data = {
-            "name": "Pop-up Tournament",
-            "start_date": self.today,
-            "is_league": False,
-        }
-        serializer = TournamentSerializer(data=data)
-        self.assertTrue(serializer.is_valid())
-
-    def test_invalid_single_day_missing_date(self):
-        """Should fail if start_date is missing on a single-day tournament."""
-        data = {"name": "Oops Tournament", "is_league": False}
-        serializer = TournamentSerializer(data=data)
-        self.assertFalse(serializer.is_valid())
-        self.assertIn("start_date", serializer.errors)
-
-    def test_valid_league_tournament(self):
-        """Should accept a valid league tournament with required fields."""
-        data = {
-            "name": "Spring League",
-            "start_date": self.today,
-            "end_date": self.today + timezone.timedelta(weeks=4),
-            "game_day": "Monday",
-            "is_league": True,
-        }
-        serializer = TournamentSerializer(data=data)
-        self.assertTrue(serializer.is_valid())
-
-    def test_invalid_league_missing_fields(self):
-        """Should fail if league tournament is missing end_date or game_day."""
-        data = {
-            "name": "Incomplete League",
-            "start_date": self.today,
-            "is_league": True,
-        }
-        serializer = TournamentSerializer(data=data)
-        self.assertFalse(serializer.is_valid())
-        self.assertIn("non_field_errors", serializer.errors)
-
-
 class PlayerSignupSerializerTests(TestCase):
     """Tests for the PlayerSignupSerializer to ensure data is valid and serialized."""
 
@@ -110,3 +63,50 @@ class PlayerSignupSerializerTests(TestCase):
         self.assertTrue(serializer.is_valid())
         self.assertNotIn("id", serializer.validated_data)
         self.assertNotIn("joined_at", serializer.validated_data)
+
+
+class TournamentSerializerTests(TestCase):
+    """Tests for validating the TournamentSerializer logic and league constraints."""
+
+    def setUp(self):
+        self.today = timezone.now().date()
+
+    def test_valid_single_day_tournament(self):
+        """Should accept a single-day tournament with only start_date."""
+        data = {
+            "name": "Pop-up Tournament",
+            "start_date": self.today,
+            "is_league": False,
+        }
+        serializer = TournamentSerializer(data=data)
+        self.assertTrue(serializer.is_valid())
+
+    def test_invalid_single_day_missing_date(self):
+        """Should fail if start_date is missing on a single-day tournament."""
+        data = {"name": "Oops Tournament", "is_league": False}
+        serializer = TournamentSerializer(data=data)
+        self.assertFalse(serializer.is_valid())
+        self.assertIn("start_date", serializer.errors)
+
+    def test_valid_league_tournament(self):
+        """Should accept a valid league tournament with required fields."""
+        data = {
+            "name": "Spring League",
+            "start_date": self.today,
+            "end_date": self.today + timezone.timedelta(weeks=4),
+            "game_day": "Monday",
+            "is_league": True,
+        }
+        serializer = TournamentSerializer(data=data)
+        self.assertTrue(serializer.is_valid())
+
+    def test_invalid_league_missing_fields(self):
+        """Should fail if league tournament is missing end_date or game_day."""
+        data = {
+            "name": "Incomplete League",
+            "start_date": self.today,
+            "is_league": True,
+        }
+        serializer = TournamentSerializer(data=data)
+        self.assertFalse(serializer.is_valid())
+        self.assertIn("non_field_errors", serializer.errors)

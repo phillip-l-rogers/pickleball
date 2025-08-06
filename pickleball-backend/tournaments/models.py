@@ -1,14 +1,14 @@
 """
-Models for managing pickleball tournaments and player signups.
+Models for managing pickleball tournaments, player signups, and organizers.
 
-Includes support for both single-day and multi-week (league-style) tournaments.
+Supports both single-day and multi-week (league-style) tournaments.
+Includes user-to-tournament associations for signups and organizer roles.
 """
 
-from django.contrib.auth import get_user_model
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
-User = get_user_model()
-
+# Days used for scheduling league games
 DAYS_OF_WEEK = [
     ("Monday", "Monday"),
     ("Tuesday", "Tuesday"),
@@ -24,27 +24,29 @@ class Tournament(models.Model):
     """
     Represents a pickleball tournament.
 
-    Supports both single-day tournaments and multi-week leagues.
+    Can be either a single-day event or a recurring league.
+    Organizers are associated per tournament via a many-to-many relationship.
     """
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(max_length=100)
+    location = models.CharField(max_length=200, blank=True)
+    start_date = models.DateField()
     end_date = models.DateField(null=True, blank=True)
     game_day = models.CharField(max_length=10, choices=DAYS_OF_WEEK, blank=True)
     is_league = models.BooleanField(default=False)
-    location = models.CharField(max_length=200, blank=True)
-    name = models.CharField(max_length=100)
-    start_date = models.DateField()
-
-    def __str__(self) -> str:
-        return str(self.name)
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(
+        "CustomUser", on_delete=models.CASCADE, related_name="created_tournaments"
+    )
+    organizers = models.ManyToManyField(
+        "CustomUser", related_name="organized_tournaments", blank=True
+    )
 
     @property
     def duration_weeks(self) -> int:
         """
-        Returns the number of weeks the tournament spans.
-
-        - Returns 1 for single-day tournaments.
-        - Computes duration based on start_date and end_date for leagues.
+        Calculates the number of weeks the tournament spans.
+        Returns 1 for single-day events.
         """
         if self.is_multi_week:
             return max(1, ((self.end_date - self.start_date).days + 1) // 7)
@@ -53,10 +55,7 @@ class Tournament(models.Model):
     @property
     def is_multi_week(self) -> bool:
         """
-        Determines if the league spans multiple weeks.
-
-        Returns True if `is_league` and `end_date` and `game_day` are set and
-        `end_date` is after `start_date`.
+        Determines whether the tournament is a multi-week league.
         """
         return bool(
             self.is_league
@@ -66,24 +65,36 @@ class Tournament(models.Model):
             and self.end_date > self.start_date
         )
 
+    def __str__(self) -> str:
+        return self.name
+
+    def save(self, *args, **kwargs):
+        """
+        Automatically adds the creator as an organizer when the tournament is first saved.
+        """
+        is_new = self.pk is None
+        super().save(*args, **kwargs)
+        if is_new:
+            self.organizers.add(self.created_by)
+
 
 class PlayerSignup(models.Model):
     """
-    Links a user to a tournament signup.
+    Connects a user to a tournament as a registered player.
 
-    Each user can only sign up once per tournament.
+    Each user can sign up once per tournament.
     """
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey("CustomUser", on_delete=models.CASCADE)
     tournament = models.ForeignKey(
         Tournament, on_delete=models.CASCADE, related_name="signups"
     )
     joined_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        """Ensures each user can sign up only once per tournament."""
-
         unique_together = ("user", "tournament")
+        verbose_name = _("Player Signup")
+        verbose_name_plural = _("Player Signups")
 
     def __str__(self) -> str:
         return f"{self.user.username} signed up for {self.tournament.name}"
