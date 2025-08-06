@@ -38,7 +38,7 @@ function TournamentList() {
                 <h3 className="text-xl font-semibold">{t.name}</h3>
                 <p className="text-sm text-gray-600">
                   {t.is_league 
-                    ? `League • ${t.start_date} → ${t.end_date} · Every ${t.play_day}` 
+                    ? `League • ${t.start_date} → ${t.end_date} · Every ${t.game_day}` 
                     : `One-day • ${t.start_date}`}
                 </p>
               </div>
