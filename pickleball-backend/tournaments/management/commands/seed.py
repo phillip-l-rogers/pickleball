@@ -31,7 +31,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         """
-        Entry point for the command. Executes all seed logic:
+        Entry point for the command.
+
+        Executes all seed logic:
         clears data, creates users and tournaments, and populates signups.
         """
         self.stdout.write("Seeding data...")
