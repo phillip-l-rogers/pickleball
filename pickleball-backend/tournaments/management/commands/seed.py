@@ -53,6 +53,7 @@ class Command(BaseCommand):
             name="One Day Open",
             start_date=today + timedelta(days=7),
             is_league=False,
+            created_by=random.choice(users),
         )
         Tournament.objects.create(
             name="Summer League",
@@ -60,6 +61,7 @@ class Command(BaseCommand):
             end_date=today + timedelta(days=70),
             game_day="Wednesday",
             is_league=True,
+            created_by=random.choice(users),
         )
 
         # Random signups
