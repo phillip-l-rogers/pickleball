@@ -52,7 +52,7 @@ class Tournament(models.Model):
 
         Returns 1 for single-day events.
         """
-        if self.is_multi_week:
+        if self.end_date and self.is_multi_week:
             return max(1, ((self.end_date - self.start_date).days + 1) // 7)
         return 1
 
@@ -68,7 +68,7 @@ class Tournament(models.Model):
         )
 
     def __str__(self) -> str:
-        return self.name
+        return str(self.name)
 
     def save(self, *args, **kwargs):
         """Adds the creator as an organizer when the tournament is first saved."""
