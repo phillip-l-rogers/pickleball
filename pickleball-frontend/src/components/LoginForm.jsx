@@ -15,7 +15,16 @@ export default function LoginForm() {
       setError("");
       navigate("/dashboard"); // 👈 update to your post-login route
     } catch (err) {
-      setError("Invalid credentials");
+      const detail = err?.response?.data;
+      if (detail) {
+        const messages = Object.entries(detail)
+          .flatMap(([field, msgs]) =>
+            msgs.map((msg) => `${field}: ${msg}`)
+          );
+        setError(messages);
+      } else {
+        setError(["Login failed. Please check your credentials."]);
+      }
     }
   };
 

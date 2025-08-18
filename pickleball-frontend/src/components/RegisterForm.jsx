@@ -17,9 +17,18 @@ export default function RegisterForm() {
       });
       localStorage.setItem("authToken", res.data.auth_token);
       setError("");
-      navigate("/dashboard"); // 👈 update to your app route
+      navigate("/dashboard");
     } catch (err) {
-      setError("Registration failed. Try a different username.");
+      const detail = err?.response?.data;
+      if (detail) {
+        const messages = Object.entries(detail)
+          .flatMap(([field, msgs]) =>
+            msgs.map((msg) => `${field}: ${msg}`)
+          );
+        setError(messages);
+      } else {
+        setError(["Registration failed. Please try again."]);
+      }
     }
   };
 
