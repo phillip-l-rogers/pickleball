@@ -1,13 +1,22 @@
+import { API_URL, AUTH_URL } from "../config";
 import API from "./axios";
 
 // POST /auth/users/
-export const register = (data) => API.post("/auth/users/", data);
+export async function register(data) {
+  return API.post(`${AUTH_URL}/users/`, data);
+}
 
 // POST /auth/token/login/
-export const login = (data) => API.post("/auth/token/login/", data);
+export async function login(data) {
+  return API.post(`${AUTH_URL}/token/login/`, data);
+}
 
 // POST /auth/token/logout/
-export const logout = () => API.post("/auth/token/logout/");
+export async function logout() {
+  return API.post(`${AUTH_URL}/token/logout/`);
+}
 
 // GET /api/users/me/
-export const getCurrentUser = () => API.get("/api/users/me/");
+export async function getCurrentUser() {
+  return API.get(`${API_URL}/users/me/`);
+}

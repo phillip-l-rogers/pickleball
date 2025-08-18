@@ -1,5 +1,17 @@
+import API_URL from "../config";
 import API from "./axios";
 
-export const getTournaments = () => API.get("/api/tournaments/");
-export const getTournamentById = (id) => API.get(`/api/tournaments/${id}/`);
-export const createTournament = (data) => API.post("/api/tournaments/", data);
+// GET /api/tournaments
+export async function getTournaments() {
+  return API.get(`${API_URL}//`);
+}
+
+// GET /api/tournaments/id/
+export async function getTournamentById(id) {
+  return API.get(`${API_URL}/tournaments/${id}/`);
+}
+
+// POST /api/tournaments/
+export async function createTournament(data) {
+  return API.post(`${API_URL}/tournaments/`, data);
+}

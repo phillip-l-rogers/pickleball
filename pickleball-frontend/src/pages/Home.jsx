@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { API_BASE } from '../config';
+import { API_URL } from '../config';
 
 function Home() {
   const [tournaments, setTournaments] = useState([]);
 
   useEffect(() => {
-    axios.get(`${API_BASE}/tournaments/`)
+    axios.get(`${API_URL}/tournaments/`)
       .then(res => setTournaments(res.data))
       .catch(err => console.error(err));
   }, []);

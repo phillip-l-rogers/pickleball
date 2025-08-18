@@ -1,7 +1,8 @@
 import axios from "axios";
+import BASE_URL from "../config";
 
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:8000",
+  baseURL: BASE_URL,
   withCredentials: false, // tokens will be in headers, not cookies
 });
 
